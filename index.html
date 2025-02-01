@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Salario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .results p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Salario</h1>
+        <form id="salaryForm">
+            <div class="form-group">
+                <label for="firstName">Nombre:</label>
+                <input type="text" id="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Apellido:</label>
+                <input type="text" id="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="position">Cargo:</label>
+                <input type="text" id="position" required>
+            </div>
+            <div class="form-group">
+                <label for="salary">Salario:</label>
+                <input type="number" id="salary" required>
+            </div>
+            <button type="button" onclick="calculateSalary()">Calcular</button>
+        </form>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        function calculateSalary() {
+            const salary = parseFloat(document.getElementById('salary').value);
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const position = document.getElementById('position').value;
+
+            // Calcular ISSS
+            const isss = salary > 1000 ? 30 : salary * 0.03;
+
+            // Calcular AFP
+            const afp = salary > 1000 ? 72.5 : salary * 0.0725;
+
+            // Calcular renta imponible
+            const rentaImponible = salary - isss - afp;
+
+            // Calcular ISR
+            let isr = 0;
+            if (rentaImponible > 2038.10) {
+                isr = (rentaImponible - 2038.10) * 0.30 + 288.57;
+            } else if (rentaImponible > 895.24) {
+                isr = (rentaImponible - 895.24) * 0.20 + 60.00;
+            } else if (rentaImponible > 472.00) {
+                isr = (rentaImponible - 472.00) * 0.10 + 17.67;
+            }
+
+            // Calcular ISSSR
+            const isssr = salary > 1000 ? 75 : salary * 0.075;
+
+            // Calcular AFPr
+            const afpr = salary > 1000 ? 87.5 : salary * 0.0875;
+
+            // Calcular totales
+            const totalIsss = isss + isssr;
+            const totalAfp = afp + afpr;
+
+            // Calcular salario líquido
+            const salarioLiquido = rentaImponible - isr;
+
+            // Mostrar resultados
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <p><strong>Nombre Completo:</strong> ${firstName} ${lastName}</p>
+                <p><strong>Cargo:</strong> ${position}</p>
+                <p><strong>Salario Bruto:</strong> $${salary.toFixed(2)}</p>
+                <p><strong>ISSS (3% o $30):</strong> $${isss.toFixed(2)}</p>
+                <p><strong>AFP (7.25% o $72.5):</strong> $${afp.toFixed(2)}</p>
+                <p><strong>Renta Imponible:</strong> $${rentaImponible.toFixed(2)}</p>
+                <p><strong>ISR:</strong> $${isr.toFixed(2)}</p>
+                <p><strong>Salario Líquido:</strong> $${salarioLiquido.toFixed(2)}</p>
+                <hr>
+                <p><strong>ISSSR (7.5%):</strong> $${isssr.toFixed(2)}</p>
+                <p><strong>AFPr (8.75% ):</strong> $${afpr.toFixed(2)}</p>
+                <p><strong>Total ISSS (ISSS + ISSSR):</strong> $${totalIsss.toFixed(2)}</p>
+                <p><strong>Total AFP (AFP + AFPr):</strong> $${totalAfp.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
