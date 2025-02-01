@@ -1,87 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Salario</title>
     <style>
+@font-face {
+    font-family: 'Samsung';
+    src: url('Samsung-Bold.woff2') format('woff2'),
+         url('Samsung-Bold.woff') format('woff'),
+         url('Samsung-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+        /* Estilos generales */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Samsung', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
             padding: 0;
             background-color: #f5f5f5;
+            color: #1c1c1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
         .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            padding: 24px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 24px;
         }
+
+        .form-section, .results-section {
+            flex: 1;
+            margin: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1c1c1e;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b6b6f;
         }
+
         input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
             font-size: 16px;
+            background-color: #fafafa;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
+        input:focus {
+            border-color: #0078d4;
+            outline: none;
+            box-shadow: 0px 0px 0px 3px rgba(0, 120, 212, 0.1);
+        }
+
         button {
+            font-family: 'Samsung', -apple-system, BlinkMacSystemFont, sans-serif;
             width: 100%;
-            padding: 10px;
-            background-color: #007bff;
+            padding: 14px;
+            background-color: #0078d4;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: #005a9e;
+            transform: translateY(-2px);
         }
+
+        button:active {
+            transform: translateY(0);
+        }
+
         .results {
-            margin-top: 20px;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
         }
+
         .results p {
-            margin: 5px 0;
+            margin: 12px 0;
+            font-size: 14px;
+            color: #6b6b6f;
+        }
+
+        .results p strong {
+            color: #1c1c1e;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 16px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora de Salario</h1>
-        <form id="salaryForm">
-            <div class="form-group">
-                <label for="firstName">Nombre:</label>
-                <input type="text" id="firstName" required>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Apellido:</label>
-                <input type="text" id="lastName" required>
-            </div>
-            <div class="form-group">
-                <label for="position">Cargo:</label>
-                <input type="text" id="position" required>
-            </div>
-            <div class="form-group">
-                <label for="salary">Salario:</label>
-                <input type="number" id="salary" required>
-            </div>
-            <button type="button" onclick="calculateSalary()">Calcular</button>
-        </form>
+        <!-- Sección del formulario -->
+        <div class="form-section">
+            <h1>Calculadora de Salario</h1>
+            <form id="salaryForm">
+                <div class="form-group">
+                    <label for="firstName">Nombre:</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Apellido:</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">Cargo:</label>
+                    <input type="text" id="position" required>
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salario:</label>
+                    <input type="number" id="salary" required min="365" step="0.01" placeholder="Ingresa un salario mayor a $365">
+                </div>
+                
+                <button type="submit">Calcular</button>
+            </form>
+        </div>
 
-        <div class="results" id="results"></div>
+        <!-- Sección de resultados -->
+        <div class="results-section">
+            <div class="results" id="results">
+                <!-- Los resultados aparecerán aquí -->
+            </div>
+            <button id="downloadExcel" style="margin-top: 20px; display: none;">Descargar Excel</button>
+        </div>
     </div>
 
+    <!-- Incluir la biblioteca SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
+        document.getElementById('salaryForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe
+            calculateSalary();
+        });
+
         function calculateSalary() {
             const salary = parseFloat(document.getElementById('salary').value);
             const firstName = document.getElementById('firstName').value;
@@ -132,12 +221,30 @@
                 <p><strong>ISR:</strong> $${isr.toFixed(2)}</p>
                 <p><strong>Salario Líquido:</strong> $${salarioLiquido.toFixed(2)}</p>
                 <hr>
-                <p><strong>ISSSR (7.5%):</strong> $${isssr.toFixed(2)}</p>
-                <p><strong>AFPr (8.75% ):</strong> $${afpr.toFixed(2)}</p>
-                <p><strong>Total ISSS (ISSS + ISSSR):</strong> $${totalIsss.toFixed(2)}</p>
-                <p><strong>Total AFP (AFP + AFPr):</strong> $${totalAfp.toFixed(2)}</p>
+                <p><strong>ISSS (7.5%):</strong> $${isssr.toFixed(2)}</p>
+                <p><strong>AFP (8.75%):</strong> $${afpr.toFixed(2)}</p>
+                <p><strong>Total ISSS (ISSS + ISSS):</strong> $${totalIsss.toFixed(2)}</p>
+                <p><strong>Total AFP (AFP + AFP):</strong> $${totalAfp.toFixed(2)}</p>
             `;
+
+            // Mostrar el botón de descarga
+            document.getElementById('downloadExcel').style.display = 'block';
+
+            // Guardar los datos para el Excel
+            const data = [
+                ["Nombre Completo", "Cargo", "Salario Bruto", "ISSS", "AFP", "Renta Imponible", "ISR", "Salario Líquido", "ISSSR", "AFPr", "Total ISSS", "Total AFP"],
+                [`${firstName} ${lastName}`, position, salary.toFixed(2), isss.toFixed(2), afp.toFixed(2), rentaImponible.toFixed(2), isr.toFixed(2), salarioLiquido.toFixed(2), isssr.toFixed(2), afpr.toFixed(2), totalIsss.toFixed(2), totalAfp.toFixed(2)]
+            ];
+
+            // Configurar el evento de descarga
+            document.getElementById('downloadExcel').addEventListener('click', () => {
+                const workbook = XLSX.utils.book_new();
+                const worksheet = XLSX.utils.aoa_to_sheet(data);
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Datos de Salario");
+                XLSX.writeFile(workbook, "datos_salario.xlsx");
+            });
         }
     </script>
 </body>
 </html>
+
