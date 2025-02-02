@@ -212,22 +212,22 @@
             event.preventDefault(); // Evita que el formulario se envíe
             calculateSalary();
         });
-
+    
         function calculateSalary() {
             const salary = parseFloat(document.getElementById('salary').value);
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
             const position = document.getElementById('position').value;
-
+    
             // Calcular ISSS
             const isss = salary > 1062.50 ? 30 : salary * 0.03;
-
+    
             // Calcular AFP
             const afp = salary > 6285.71 ? 72.5 : salary * 0.0725;
-
+    
             // Calcular renta imponible
             const rentaImponible = salary - isss - afp;
-
+    
             // Calcular ISR
             let isr = 0;
             if (rentaImponible > 2038.10) {
@@ -237,20 +237,20 @@
             } else if (rentaImponible > 472.00) {
                 isr = (rentaImponible - 472.00) * 0.10 + 17.67;
             }
-
-            // Calcular ISSSR
-            const isssr = salary > 1062.50 ? 75 : salary * 0.075;
-
-            // Calcular AFPr
-            const afpr = salary > 6285.71 ? 77.5 : salary * 0.0775;
-
+    
+            // Calcular ISSSpatrono
+            const ISSSpatrono = salary > 1062.50 ? 75 : salary * 0.075;
+    
+            // Calcular AFPpatrono
+            const AFPpatrono = salary > 6285.71 ? 77.5 : salary * 0.0775;
+    
             // Calcular totales
-            const totalIsss = isss + isssr;
-            const totalAfp = afp + afpr;
-
+            const totalIsss = isss + ISSSpatrono;
+            const totalAfp = afp + AFPpatrono;
+    
             // Calcular salario líquido
             const salarioLiquido = rentaImponible - isr;
-
+    
             // Mostrar resultados
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `
@@ -263,21 +263,21 @@
                 <p><strong>ISR:</strong> $${isr.toFixed(2)}</p>
                 <p><strong>Salario Líquido:</strong> $${salarioLiquido.toFixed(2)}</p>
                 <hr>
-                <p><strong>ISSS (7.5%):</strong> $${isssr.toFixed(2)}</p>
-                <p><strong>AFP (8.75%):</strong> $${afpr.toFixed(2)}</p>
-                <p><strong>Total ISSS (ISSS + ISSS):</strong> $${totalIsss.toFixed(2)}</p>
-                <p><strong>Total AFP (AFP + AFP):</strong> $${totalAfp.toFixed(2)}</p>
+                <p><strong>ISSS (7.5% ):</strong> $${ISSSpatrono.toFixed(2)}</p>
+                <p><strong>AFP (8.75% ):</strong> $${AFPpatrono.toFixed(2)}</p>
+                <p><strong>Total ISSS :</strong> $${totalIsss.toFixed(2)}</p>
+                <p><strong>Total AFP </strong> $${totalAfp.toFixed(2)}</p>
             `;
-
+    
             // Mostrar el botón de descarga
             document.getElementById('downloadExcel').style.display = 'block';
-
+    
             // Guardar los datos para el Excel
             const data = [
-                ["Nombre Completo", "Cargo", "Salario Bruto", "ISSS", "AFP", "Renta Imponible", "ISR", "Salario Líquido", "ISSSR", "AFPr", "Total ISSS", "Total AFP"],
-                [`${firstName} ${lastName}`, position, salary.toFixed(2), isss.toFixed(2), afp.toFixed(2), rentaImponible.toFixed(2), isr.toFixed(2), salarioLiquido.toFixed(2), isssr.toFixed(2), afpr.toFixed(2), totalIsss.toFixed(2), totalAfp.toFixed(2)]
+                ["Nombre Completo", "Cargo", "Salario Bruto", "ISSS", "AFP", "Renta Imponible", "ISR", "Salario Líquido", "ISSSpatrono", "AFPpatrono", "Total ISSS", "Total AFP"],
+                [`${firstName} ${lastName}`, position, salary.toFixed(2), isss.toFixed(2), afp.toFixed(2), rentaImponible.toFixed(2), isr.toFixed(2), salarioLiquido.toFixed(2), ISSSpatrono.toFixed(2), AFPpatrono.toFixed(2), totalIsss.toFixed(2), totalAfp.toFixed(2)]
             ];
-
+    
             // Configurar el evento de descarga
             document.getElementById('downloadExcel').addEventListener('click', () => {
                 const workbook = XLSX.utils.book_new();
@@ -287,6 +287,7 @@
             });
         }
     </script>
+    
 </body>
 </html>
 
