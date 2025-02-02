@@ -220,10 +220,10 @@
             const position = document.getElementById('position').value;
 
             // Calcular ISSS
-            const isss = salary > 1000 ? 30 : salary * 0.03;
+            const isss = salary > 1062.50 ? 30 : salary * 0.03;
 
             // Calcular AFP
-            const afp = salary > 1000 ? 72.5 : salary * 0.0725;
+            const afp = salary > 6285.71 ? 72.5 : salary * 0.0725;
 
             // Calcular renta imponible
             const rentaImponible = salary - isss - afp;
@@ -239,10 +239,10 @@
             }
 
             // Calcular ISSSR
-            const isssr = salary > 1000 ? 75 : salary * 0.075;
+            const isssr = salary > 1062.50 ? 75 : salary * 0.075;
 
             // Calcular AFPr
-            const afpr = salary > 1000 ? 87.5 : salary * 0.0875;
+            const afpr = salary > 6285.71 ? 77.5 : salary * 0.0775;
 
             // Calcular totales
             const totalIsss = isss + isssr;
@@ -257,8 +257,8 @@
                 <p><strong>Nombre Completo:</strong> ${firstName} ${lastName}</p>
                 <p><strong>Cargo:</strong> ${position}</p>
                 <p><strong>Salario Bruto:</strong> $${salary.toFixed(2)}</p>
-                <p><strong>ISSS (3% o $30):</strong> $${isss.toFixed(2)}</p>
-                <p><strong>AFP (7.25% o $72.5):</strong> $${afp.toFixed(2)}</p>
+                <p><strong>ISSS (3% ):</strong> $${isss.toFixed(2)}</p>
+                <p><strong>AFP (7.25%):</strong> $${afp.toFixed(2)}</p>
                 <p><strong>Renta Imponible:</strong> $${rentaImponible.toFixed(2)}</p>
                 <p><strong>ISR:</strong> $${isr.toFixed(2)}</p>
                 <p><strong>Salario Líquido:</strong> $${salarioLiquido.toFixed(2)}</p>
