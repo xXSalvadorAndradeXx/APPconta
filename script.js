@@ -32,7 +32,7 @@
             const isss = salary > 1062.50 ? 30 : salary * 0.03;
     
             // Calcular AFP
-            const afp = salary * 0.0725;
+            const afp =  salary * 0.0725;
     
             // Calcular renta imponible
             const rentaImponible = salary - isss - afp;
