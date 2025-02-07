@@ -51,7 +51,7 @@
             const ISSSpatrono = salary > 1062.50 ? 75 : salary * 0.075;
     
             // Calcular AFPpatrono
-            const AFPpatrono = salary * 0.0825;
+            const AFPpatrono = salary * 0.0875;
     
             // Calcular totales
             const totalIsss = isss + ISSSpatrono;
@@ -63,6 +63,7 @@
             // Mostrar resultados
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `
+                <p><strong>Empleado</strong>
                 <p><strong>Nombre Completo:</strong> ${firstName} ${lastName}</p>
                 <p><strong>Cargo:</strong> ${position}</p>
                 <p><strong>Salario Bruto:</strong> $${salary.toFixed(2)}</p>
@@ -72,6 +73,7 @@
                 <p><strong>ISR:</strong> $${isr.toFixed(2)}</p>
                 <p><strong>Salario Líquido:</strong> $${salarioLiquido.toFixed(2)}</p>
                 <hr>
+                <p><strong>Empleador</strong>
                 <p><strong>ISSS (7.5% ):</strong> $${ISSSpatrono.toFixed(2)}</p>
                 <p><strong>AFP (8.75% ):</strong> $${AFPpatrono.toFixed(2)}</p>
                 <p><strong>Total ISSS :</strong> $${totalIsss.toFixed(2)}</p>
@@ -83,6 +85,7 @@
     
             // Guardar los datos para el Excel
             const data = [
+                
                 ["Nombre Completo", "Cargo", "Salario Bruto", "ISSS", "AFP", "Renta Imponible", "ISR", "Salario Líquido", "ISSSpatrono", "AFPpatrono", "Total ISSS", "Total AFP"],
                 [`${firstName} ${lastName}`, position, salary.toFixed(2), isss.toFixed(2), afp.toFixed(2), rentaImponible.toFixed(2), isr.toFixed(2), salarioLiquido.toFixed(2), ISSSpatrono.toFixed(2), AFPpatrono.toFixed(2), totalIsss.toFixed(2), totalAfp.toFixed(2)]
             ];
